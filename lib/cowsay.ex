@@ -1,0 +1,2 @@
+defmodule Cowsay do
+end

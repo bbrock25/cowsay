@@ -2,9 +2,7 @@ defmodule CowsayTest do
   use ExUnit.Case
 
   test "Cowsay returns a string containing a thought"  do
-    Cowsay.say("thought")
-    |> String.contains?("thought")
-    |> assert
+    assert ( Cowsay.say("thought") |> String.contains?("thought"))
   end
 
   test "Cowsay print outputs to standard IO" do

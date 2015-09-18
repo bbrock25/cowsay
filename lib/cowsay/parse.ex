@@ -4,11 +4,14 @@ defmodule Cowsay.Parse do
   Takes in the thoughts, returns a bordered version
   """
   def bubble(thoughts) do
-    l = thoughts |> wrap |> max_len
-    x = String.duplicate("-", l + 4) <> "\n"
-    y = Enum.reduce(wrap(thoughts), "", fn(x, acc) ->
-       acc <> "| #{x} #{String.duplicate(" ", l - String.length(x))}|\n" end)
-    x <> y <> x
+    line_len = thoughts |> wrap |> max_len
+    border = String.duplicate("-", line_len + 4) <> "\n"
+    content = Enum.reduce(wrap(thoughts), "",
+      fn(x, acc) ->
+        acc <>
+        "| #{x} #{String.duplicate(" ", line_len - String.length(x))}|\n" 
+      end)
+    border <> content <> border
   end
 
   @doc"""
@@ -23,8 +26,8 @@ defmodule Cowsay.Parse do
 
   defp max_len(thoughts) do
     thoughts
-    |> Enum.max_by(fn(x) -> String.length(x) end)
-    |> String.length
+      |> Enum.max_by(fn(x) -> String.length(x) end)
+      |> String.length
   end
 
   defp create_line([head | []], _) do 
